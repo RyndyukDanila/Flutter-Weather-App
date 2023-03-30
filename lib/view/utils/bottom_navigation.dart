@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/tab.dart';
+import '../../model/tab.dart';
 
 const Map<TabItem, MyTab> tabs = {
   TabItem.FORECAST: MyTab(name: "Forecast", icon: Icons.bar_chart_rounded),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../model/tab.dart';
-import 'bottom_navigation.dart';
-import 'tab_navigator.dart';
+import '../../model/tab.dart';
+import '../utils/bottom_navigation.dart';
+import '../utils/tab_navigator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../model/tab.dart';
-import 'forecast_page.dart';
-import 'locations_page.dart';
-import 'settings_page.dart';
+import '../../model/tab.dart';
+import '../pages/forecast_page.dart';
+import '../pages/locations_page.dart';
+import '../pages/settings_page.dart';
 
 class TabNavigator extends StatelessWidget {
   const TabNavigator(
