@@ -9,7 +9,6 @@ class LocationController extends ChangeNotifier {
 
   LocationController() {
     _preferences = LocationPreferences();
-    getPreferences();
   }
 
   Future<Position> _determinePosition() async {
@@ -51,6 +50,12 @@ class LocationController extends ChangeNotifier {
       Position pos = await _determinePosition();
       setCoordinates(pos.latitude, pos.longitude);
     }
+    notifyListeners();
+  }
+
+  getCurrentLocation() async {
+    Position pos = await _determinePosition();
+    setCoordinates(pos.latitude, pos.longitude);
     notifyListeners();
   }
 }

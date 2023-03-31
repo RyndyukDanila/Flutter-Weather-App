@@ -15,8 +15,6 @@ class ForecastPage extends StatefulWidget {
 }
 
 class _ForecastPageState extends State<ForecastPage> {
-  final LocationController _locationController = LocationController();
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -29,7 +27,7 @@ class _ForecastPageState extends State<ForecastPage> {
               actions: [
                 IconButton(
                   onPressed: () {
-                    _locationController.getPreferences();
+                    locationNotifier.getCurrentLocation();
                   },
                   icon: Icon(Icons.my_location_rounded),
                 )
