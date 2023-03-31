@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_app/view/pages/forecast_page.dart';
+import 'package:flutter_weather_app/view/utils/tab_navigator.dart';
 
 import '../../model/city.dart';
 
@@ -58,10 +60,11 @@ class _LocationsPageState extends State<LocationsPage> {
         title: Text("Locations Page"),
         actions: [
           IconButton(
-              icon: Icon(Icons.add_rounded),
-              onPressed: () {
-                _displayDialog();
-              }),
+            onPressed: () {
+              _displayDialog();
+            },
+            icon: Icon(Icons.add_rounded),
+          )
         ],
       ),
       body: ReorderableListView(
