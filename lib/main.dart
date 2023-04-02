@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter_weather_app/controller/theme_controller.dart';
 
+import 'controller/location_controller.dart';
 import 'view/screens/home_screen.dart';
 
 void main() {
@@ -14,8 +15,13 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ThemeController(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeController>(
+            create: (_) => ThemeController()),
+        ChangeNotifierProvider<LocationController>(
+            create: (_) => LocationController()),
+      ],
       child: Consumer<ThemeController>(
         builder: (context, ThemeController themeNotifier, child) {
           return MaterialApp(

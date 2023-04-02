@@ -12,6 +12,7 @@ dependencies:
   provider: ^6.0.5
   shared_preferences: ^2.0.20
   geolocator: ^9.0.2
+  geocoding: ^2.1.0
 
 dev_dependencies:
   flutter_test:

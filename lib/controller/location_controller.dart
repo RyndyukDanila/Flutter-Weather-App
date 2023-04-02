@@ -1,14 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_app/model/tab.dart';
 import 'package:geolocator/geolocator.dart';
-
-import '../model/location_preferences.dart';
+import 'package:geocoding/geocoding.dart';
 
 class LocationController extends ChangeNotifier {
-  late LocationPreferences _preferences;
-  List<double?> coordinates = [null, null];
+  late List<double> coordinates;
+  late String address;
+  bool isLoading = false;
 
   LocationController() {
-    _preferences = LocationPreferences();
+    getCurrentLocation();
+  }
+
+  getCurrentLocation() async {
+    isLoading = true;
+    notifyListeners();
+
+    Position pos = await _determinePosition();
+    coordinates = [pos.latitude, pos.longitude];
+
+    await getAddress(latitude: coordinates[0], longitude: coordinates[1]);
+
+    isLoading = false;
+    notifyListeners();
+  }
+
+  getLocation({required String name}) async {
+    isLoading = true;
+    notifyListeners();
+
+    address = name;
+    List<Location> locations = await locationFromAddress(name);
+    Location location = locations[0];
+    coordinates = [location.latitude, location.longitude];
+
+    isLoading = false;
+    notifyListeners();
+  }
+
+  getAddress({required double latitude, required double longitude}) async {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latitude, longitude);
+    Placemark place = placemarks[0];
+    address = place.locality!;
   }
 
   Future<Position> _determinePosition() async {
@@ -36,26 +70,5 @@ class LocationController extends ChangeNotifier {
     return await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
-  }
-
-  setCoordinates(double latitude, double longitude) {
-    coordinates = [latitude, longitude];
-    _preferences.setLocation(latitude, longitude);
-    notifyListeners();
-  }
-
-  getPreferences() async {
-    coordinates = await _preferences.getLocation();
-    if (coordinates[1] == null) {
-      Position pos = await _determinePosition();
-      setCoordinates(pos.latitude, pos.longitude);
-    }
-    notifyListeners();
-  }
-
-  getCurrentLocation() async {
-    Position pos = await _determinePosition();
-    setCoordinates(pos.latitude, pos.longitude);
-    notifyListeners();
   }
 }

@@ -15,14 +15,20 @@ class _LocationWidgetState extends State<LocationWidget> {
   Widget build(BuildContext context) {
     return Consumer<LocationController>(
       builder: (context, LocationController locationNotifier, child) {
-        return Text(
-          locationNotifier.coordinates.toString(),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          ),
-        );
+        return locationNotifier.isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                child: Text(
+                  locationNotifier.address,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
       },
     );
   }

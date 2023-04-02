@@ -17,38 +17,35 @@ class ForecastPage extends StatefulWidget {
 class _ForecastPageState extends State<ForecastPage> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => LocationController(),
-      child: Consumer<LocationController>(
-        builder: (context, LocationController locationNotifier, child) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("Forecast Page"),
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    locationNotifier.getCurrentLocation();
-                  },
-                  icon: Icon(Icons.my_location_rounded),
-                )
+    return Consumer<LocationController>(
+      builder: (context, LocationController locationNotifier, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("Forecast Page"),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  locationNotifier.getCurrentLocation();
+                },
+                icon: Icon(Icons.my_location_rounded),
+              )
+            ],
+          ),
+          body: Container(
+            child: ListView(
+              children: [
+                LocationWidget(),
+                Divider(),
+                CurrentWeatherWidget(),
+                Divider(),
+                DayWeatherWidget(),
+                Divider(),
+                WeekWeatherWidget(),
               ],
             ),
-            body: Container(
-              child: ListView(
-                children: [
-                  LocationWidget(),
-                  Divider(),
-                  CurrentWeatherWidget(),
-                  Divider(),
-                  DayWeatherWidget(),
-                  Divider(),
-                  WeekWeatherWidget(),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -55,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: TabNavigator(
         navigatorKey: _navigatorKeys[tabItem]!,
         tabItem: tabItem,
+        selectTabFunction: _selectTab,
       ),
     );
   }
