@@ -31,7 +31,8 @@ class _ForecastPageState extends State<ForecastPage> {
               )
             ],
           ),
-          body: Container(
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: ListView(
               children: [
                 LocationWidget(),

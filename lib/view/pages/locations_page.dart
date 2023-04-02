@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_weather_app/controller/cities_controller.dart';
+import 'package:flutter_weather_app/model/cities_preferences.dart';
 import 'package:flutter_weather_app/view/pages/forecast_page.dart';
 import 'package:flutter_weather_app/view/utils/tab_navigator.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/location_controller.dart';
-import '../../model/city.dart';
 import '../../model/tab.dart';
 import '../screens/home_screen.dart';
 
@@ -18,26 +19,12 @@ class LocationsPage extends StatefulWidget {
 
 class _LocationsPageState extends State<LocationsPage> {
   final TextEditingController _textFieldController = TextEditingController();
-  final List<City> _cities = <City>[];
 
   void _onTapCityFunction(TabItem tabItem) {
     widget.onTapCityFunction(tabItem);
   }
 
-  void _addCityItem(String name) {
-    setState(() {
-      _cities.add(City(name: name));
-    });
-    _textFieldController.clear();
-  }
-
-  void _handleCityDelete(City city) {
-    setState(() {
-      _cities.remove(city);
-    });
-  }
-
-  Future<void> _displayDialog() async {
+  Future<void> _displayDialog(CitiesController citiesNotifier) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -53,7 +40,8 @@ class _LocationsPageState extends State<LocationsPage> {
               child: const Text('Add'),
               onPressed: () {
                 Navigator.of(context).pop();
-                _addCityItem(_textFieldController.text);
+                citiesNotifier.addCityItem(_textFieldController.text);
+                _textFieldController.clear();
               },
             ),
           ],
@@ -64,49 +52,60 @@ class _LocationsPageState extends State<LocationsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LocationController>(
-      builder: (context, LocationController locationNotifier, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text("Locations Page"),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  _displayDialog();
-                },
-                icon: Icon(Icons.add_rounded),
-              )
-            ],
-          ),
-          body: ReorderableListView(
-            children: <Widget>[
-              for (int index = 0; index < _cities.length; index += 1)
-                ListTile(
-                  key: Key('$index'),
-                  title: Text('${_cities[index]}'),
-                  leading: Icon(Icons.drag_handle_rounded),
-                  trailing: IconButton(
-                    icon: Icon(Icons.close_rounded),
-                    onPressed: () => _handleCityDelete(_cities[index]),
-                  ),
-                  onTap: () async {
-                    locationNotifier.getLocation(name: '${_cities[index]}');
-                    _onTapCityFunction(TabItem.FORECAST);
+    return ChangeNotifierProvider<CitiesController>(
+      create: (_) => CitiesController(),
+      child: Consumer2<LocationController, CitiesController>(
+        builder: (context, LocationController locationNotifier,
+            CitiesController citiesNotifier, child) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("Locations Page"),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    _displayDialog(citiesNotifier);
                   },
-                ),
-            ],
-            onReorder: (int oldIndex, int newIndex) {
-              setState(() {
-                if (oldIndex < newIndex) {
-                  newIndex -= 1;
-                }
-                final City item = _cities.removeAt(oldIndex);
-                _cities.insert(newIndex, item);
-              });
-            },
-          ),
-        );
-      },
+                  icon: Icon(Icons.add_rounded),
+                )
+              ],
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ReorderableListView(
+                children: <Widget>[
+                  for (int index = 0;
+                      index < citiesNotifier.cities.length;
+                      index += 1)
+                    ListTile(
+                      key: Key('$index'),
+                      title: Text(citiesNotifier.cities[index]),
+                      leading: Icon(Icons.drag_handle_rounded),
+                      trailing: IconButton(
+                        icon: Icon(Icons.close_rounded),
+                        onPressed: () => citiesNotifier
+                            .handleCityDelete(citiesNotifier.cities[index]),
+                      ),
+                      onTap: () async {
+                        locationNotifier.getLocation(
+                            name: citiesNotifier.cities[index]);
+                        citiesNotifier.selectCity(index);
+                        _onTapCityFunction(TabItem.FORECAST);
+                      },
+                      selected: citiesNotifier.cities[index] ==
+                          citiesNotifier.selectedCity,
+                      selectedTileColor: Colors.black12,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                    ),
+                ],
+                onReorder: (int oldIndex, int newIndex) {
+                  citiesNotifier.reorderCitites(oldIndex, newIndex);
+                },
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
