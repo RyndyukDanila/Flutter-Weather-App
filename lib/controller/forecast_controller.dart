@@ -1,14 +1,22 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_app/model/tab.dart';
+import 'package:flutter_weather_app/model/weather/hourly_weather.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
-class LocationController extends ChangeNotifier {
+import '../model/weather/current_weather.dart';
+import 'utils/api_service.dart';
+
+class ForecastController extends ChangeNotifier {
   late List<double> coordinates;
   late String address;
-  bool isLoading = false;
+  bool isLoading = true;
 
-  LocationController() {
+  final weatherService = WeatherService();
+  late CurrentWeather currentWeather;
+  late List<HourlyWeather> dayWeather;
+
+  ForecastController() {
     getCurrentLocation();
   }
 
@@ -21,8 +29,7 @@ class LocationController extends ChangeNotifier {
 
     await getAddress(latitude: coordinates[0], longitude: coordinates[1]);
 
-    isLoading = false;
-    notifyListeners();
+    getWeatherData();
   }
 
   getLocation({required String name}) async {
@@ -34,13 +41,15 @@ class LocationController extends ChangeNotifier {
     Location location = locations[0];
     coordinates = [location.latitude, location.longitude];
 
-    isLoading = false;
-    notifyListeners();
+    getWeatherData();
   }
 
   getAddress({required double latitude, required double longitude}) async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(latitude, longitude);
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      latitude,
+      longitude,
+      localeIdentifier: 'en_US',
+    );
     Placemark place = placemarks[0];
     address = place.locality!;
   }
@@ -63,12 +72,22 @@ class LocationController extends ChangeNotifier {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
     }
 
     return await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
+  }
+
+  getWeatherData() async {
+    Response result;
+    result = await weatherService.request(coordinates[0], coordinates[1]);
+
+    currentWeather = CurrentWeather.fromJson(result.data['current']);
+    dayWeather = List<HourlyWeather>.from(result.data['hourly'].map((e) => HourlyWeather.fromJson(e)));
+
+    isLoading = false;
+    notifyListeners();
   }
 }

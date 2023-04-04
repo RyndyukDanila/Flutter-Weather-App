@@ -4,7 +4,7 @@ import '../model/cities_preferences.dart';
 
 class CitiesController extends ChangeNotifier {
   List<String> cities = ['London'];
-  String? selectedCity = null;
+  String? selectedCity;
   late CitiesPreferences _preferences;
 
   CitiesController() {

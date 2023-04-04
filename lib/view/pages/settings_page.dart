@@ -15,16 +15,14 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: Text("Settings Page"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: [
-            ListTile(
-              title: Text('Use dark theme'),
-              trailing: ThemeSwitchWidget(),
-            ),
-          ],
-        ),
+      body: ListView(
+        padding: EdgeInsets.all(8.0),
+        children: [
+          ListTile(
+            title: Text('Use dark theme'),
+            trailing: ThemeSwitchWidget(),
+          ),
+        ],
       ),
     );
   }

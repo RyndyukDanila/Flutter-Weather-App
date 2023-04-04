@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../controller/location_controller.dart';
+import '../../controller/forecast_controller.dart';
 import '../widgets/current_weather_widget.dart';
 import '../widgets/day_weather_widget.dart';
 import '../widgets/location_widget.dart';
@@ -17,34 +17,40 @@ class ForecastPage extends StatefulWidget {
 class _ForecastPageState extends State<ForecastPage> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<LocationController>(
-      builder: (context, LocationController locationNotifier, child) {
+    return Consumer<ForecastController>(
+      builder: (context, ForecastController forecastNotifier, child) {
         return Scaffold(
           appBar: AppBar(
             title: Text("Forecast Page"),
             actions: [
               IconButton(
+                tooltip: 'Get your current location',
                 onPressed: () {
-                  locationNotifier.getCurrentLocation();
+                  forecastNotifier.getCurrentLocation();
                 },
                 icon: Icon(Icons.my_location_rounded),
               )
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              children: [
-                LocationWidget(),
-                Divider(),
-                CurrentWeatherWidget(),
-                Divider(),
-                DayWeatherWidget(),
-                Divider(),
-                WeekWeatherWidget(),
-              ],
-            ),
-          ),
+          body: forecastNotifier.isLoading
+              ? Container(
+                  padding: EdgeInsets.all(4.0),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : ListView(
+                  padding: EdgeInsets.all(8.0),
+                  children: [
+                    LocationWidget(),
+                    Divider(),
+                    CurrentWeatherWidget(),
+                    Divider(),
+                    DayWeatherWidget(),
+                    Divider(),
+                    WeekWeatherWidget(),
+                  ],
+                ),
         );
       },
     );
