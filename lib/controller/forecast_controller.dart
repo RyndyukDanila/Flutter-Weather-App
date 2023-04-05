@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
 import '../model/weather/current_weather.dart';
+import '../model/weather/daily_weather.dart';
 import 'utils/api_service.dart';
 
 class ForecastController extends ChangeNotifier {
@@ -15,6 +16,7 @@ class ForecastController extends ChangeNotifier {
   final weatherService = WeatherService();
   late CurrentWeather currentWeather;
   late List<HourlyWeather> hourlyWeather;
+  late List<DailyWeather> dailyWeather;
 
   ForecastController() {
     getCurrentLocation();
@@ -86,6 +88,7 @@ class ForecastController extends ChangeNotifier {
 
     currentWeather = CurrentWeather.fromJson(result.data['current']);
     hourlyWeather = List<HourlyWeather>.from(result.data['hourly'].map((e) => HourlyWeather.fromJson(e)));
+    dailyWeather = List<DailyWeather>.from(result.data['daily'].map((e) => DailyWeather.fromJson(e)));
 
     isLoading = false;
     notifyListeners();

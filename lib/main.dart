@@ -7,11 +7,11 @@ import 'controller/forecast_controller.dart';
 import 'view/screens/home_screen.dart';
 
 void main() {
-  runApp(MainApp());
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  MainApp({super.key});
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class MainApp extends StatelessWidget {
             title: 'Flutter Weather App',
             theme: settingsNotifier.isDark ? ThemeData.dark() : ThemeData(primarySwatch: Colors.purple),
             debugShowCheckedModeBanner: false,
-            home: HomeScreen(),
+            home: const HomeScreen(),
           );
         },
       ),

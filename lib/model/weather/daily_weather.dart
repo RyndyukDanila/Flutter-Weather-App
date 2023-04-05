@@ -13,6 +13,7 @@ class DailyWeather {
   });
 
   factory DailyWeather.fromJson(Map<String, dynamic> json) => DailyWeather(
+        dt: json['dt'] as int?,
         temp: json['temp'] == null ? null : Temp.fromJson(json['temp'] as Map<String, dynamic>),
         weather: (json['weather'] as List<dynamic>?)?.map((e) => Weather.fromJson(e as Map<String, dynamic>)).toList(),
       );

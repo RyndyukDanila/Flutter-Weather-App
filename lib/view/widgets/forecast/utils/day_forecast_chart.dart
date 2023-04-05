@@ -27,7 +27,7 @@ Widget leftTitleWidgets(double value, TitleMeta meta) {
         )
       : Text(
           '${value.toInt()}°'.toString(),
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 14,
             color: Colors.lightBlue,
           ),
@@ -36,7 +36,7 @@ Widget leftTitleWidgets(double value, TitleMeta meta) {
   if (value == 0) {
     text = Text(
       '${value.toInt()}°'.toString(),
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 14,
         color: Colors.purple,
       ),

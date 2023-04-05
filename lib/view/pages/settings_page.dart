@@ -15,11 +15,11 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings Page"),
+        title: const Text("Settings Page"),
       ),
       body: ListView(
-        padding: EdgeInsets.all(8.0),
-        children: [
+        padding: const EdgeInsets.all(8.0),
+        children: const [
           ListTile(
             title: Text('Use dark theme'),
             trailing: ThemeSwitchWidget(),

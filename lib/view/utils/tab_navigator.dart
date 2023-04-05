@@ -6,11 +6,7 @@ import '../pages/locations_page.dart';
 import '../pages/settings_page.dart';
 
 class TabNavigator extends StatelessWidget {
-  const TabNavigator(
-      {super.key,
-      required this.navigatorKey,
-      required this.tabItem,
-      required this.selectTabFunction});
+  const TabNavigator({super.key, required this.navigatorKey, required this.tabItem, required this.selectTabFunction});
 
   final GlobalKey<NavigatorState> navigatorKey;
   final TabItem tabItem;
@@ -23,11 +19,11 @@ class TabNavigator extends StatelessWidget {
       onGenerateRoute: (routeSettings) {
         Widget currentPage;
         if (tabItem == TabItem.FORECAST) {
-          currentPage = ForecastPage();
+          currentPage = const ForecastPage();
         } else if (tabItem == TabItem.LOCATIONS) {
           currentPage = LocationsPage(onTapCityFunction: selectTabFunction);
         } else {
-          currentPage = SettingsPage();
+          currentPage = const SettingsPage();
         }
         return MaterialPageRoute(builder: (context) => currentPage);
       },

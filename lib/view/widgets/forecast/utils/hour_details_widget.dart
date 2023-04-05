@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class HourDetailsWidget extends StatelessWidget {
-  int temp;
-  String icon;
-  String hour;
-  String desc;
+  final int temp;
+  final String icon;
+  final String hour;
+  final String desc;
 
-  HourDetailsWidget({super.key, required this.temp, required this.icon, required this.hour, required this.desc});
+  const HourDetailsWidget({super.key, required this.temp, required this.icon, required this.hour, required this.desc});
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ import '../../controller/forecast_controller.dart';
 import '../widgets/forecast/current_weather_widget.dart';
 import '../widgets/forecast/hourly_weather_widget.dart';
 import '../widgets/forecast/location_widget.dart';
-import '../widgets/forecast/week_weather_widget.dart';
+import '../widgets/forecast/daily_weather_widget.dart';
 
 class ForecastPage extends StatefulWidget {
   const ForecastPage({super.key});
@@ -48,7 +48,7 @@ class _ForecastPageState extends State<ForecastPage> {
                     Divider(),
                     HourlyWeatherWidget(),
                     Divider(),
-                    WeekWeatherWidget(),
+                    DailyWeatherWidget(),
                   ],
                 ),
         );

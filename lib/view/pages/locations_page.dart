@@ -70,7 +70,7 @@ class _LocationsPageState extends State<LocationsPage> {
                 child: Material(
                   elevation: 3,
                   child: ListTile(
-                    title: Text('Get your current location'),
+                    title: const Text('Get your current location'),
                     leading: const Icon(Icons.my_location_rounded),
                     onTap: () {
                       forecastNotifier.getCurrentLocation();
