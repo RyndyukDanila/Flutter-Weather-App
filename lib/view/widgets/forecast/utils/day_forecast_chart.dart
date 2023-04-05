@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../model/weather/hourly_weather.dart';
+import '../../../../model/weather/hourly_weather.dart';
 
 Widget bottomTitleWidgets(double value, TitleMeta meta) {
   const style = TextStyle(

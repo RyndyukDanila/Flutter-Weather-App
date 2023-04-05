@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_app/view/widgets/theme_switch_widget.dart';
+
+import '../widgets/settings/day_chart_switch_widget.dart';
+import '../widgets/settings/theme_switch_widget.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -22,6 +24,10 @@ class _SettingsPageState extends State<SettingsPage> {
             title: Text('Use dark theme'),
             trailing: ThemeSwitchWidget(),
           ),
+          ListTile(
+            title: Text('Use day chart'),
+            trailing: DayChartSwitchWidget(),
+          )
         ],
       ),
     );

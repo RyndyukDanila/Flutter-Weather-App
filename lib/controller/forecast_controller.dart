@@ -14,7 +14,7 @@ class ForecastController extends ChangeNotifier {
 
   final weatherService = WeatherService();
   late CurrentWeather currentWeather;
-  late List<HourlyWeather> dayWeather;
+  late List<HourlyWeather> hourlyWeather;
 
   ForecastController() {
     getCurrentLocation();
@@ -85,7 +85,7 @@ class ForecastController extends ChangeNotifier {
     result = await weatherService.request(coordinates[0], coordinates[1]);
 
     currentWeather = CurrentWeather.fromJson(result.data['current']);
-    dayWeather = List<HourlyWeather>.from(result.data['hourly'].map((e) => HourlyWeather.fromJson(e)));
+    hourlyWeather = List<HourlyWeather>.from(result.data['hourly'].map((e) => HourlyWeather.fromJson(e)));
 
     isLoading = false;
     notifyListeners();

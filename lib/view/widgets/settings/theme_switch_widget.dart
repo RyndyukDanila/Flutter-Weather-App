@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../controller/theme_controller.dart';
+import '../../../controller/settings_controller.dart';
 
 class ThemeSwitchWidget extends StatefulWidget {
   const ThemeSwitchWidget({super.key});
@@ -13,12 +13,12 @@ class ThemeSwitchWidget extends StatefulWidget {
 class _ThemeSwitchWidgetState extends State<ThemeSwitchWidget> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeController>(
-      builder: (context, ThemeController themeNotifier, child) {
+    return Consumer<SettingsController>(
+      builder: (context, SettingsController settingsNotifier, child) {
         return Switch(
-          value: themeNotifier.isDark,
+          value: settingsNotifier.isDark,
           onChanged: (bool value) {
-            themeNotifier.isDark = value;
+            settingsNotifier.setDarkTheme(value);
           },
         );
       },

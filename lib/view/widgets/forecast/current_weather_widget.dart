@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../controller/forecast_controller.dart';
+import '../../../controller/forecast_controller.dart';
 
 class CurrentWeatherWidget extends StatefulWidget {
   const CurrentWeatherWidget({super.key});
@@ -17,13 +17,13 @@ class _CurrentWeatherWidgetState extends State<CurrentWeatherWidget> {
       builder: (context, ForecastController forecastNotifier, child) {
         return Column(
           children: [
-            Text(
+            const Text(
               'Right now',
               style: TextStyle(
                 fontSize: 24,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -37,28 +37,28 @@ class _CurrentWeatherWidgetState extends State<CurrentWeatherWidget> {
                 Container(
                   height: 60,
                   width: 1,
-                  color: Colors.grey.shade300,
+                  color: Theme.of(context).dividerColor,
                 ),
                 Row(
                   children: [
                     Text(
                       '${forecastNotifier.currentWeather.temp}°',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 60,
                       ),
                     ),
                     Text(
                       '${forecastNotifier.currentWeather.weather![0].description}',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade500,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
                   ],
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -71,7 +71,7 @@ class _CurrentWeatherWidgetState extends State<CurrentWeatherWidget> {
                       height: 70,
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
+                        color: Theme.of(context).dividerColor,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Image.asset(
@@ -80,7 +80,7 @@ class _CurrentWeatherWidgetState extends State<CurrentWeatherWidget> {
                         height: 40,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text('${forecastNotifier.currentWeather.windSpeed}km/h'),
@@ -93,7 +93,7 @@ class _CurrentWeatherWidgetState extends State<CurrentWeatherWidget> {
                       height: 70,
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
+                        color: Theme.of(context).dividerColor,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Image.asset(
@@ -102,7 +102,7 @@ class _CurrentWeatherWidgetState extends State<CurrentWeatherWidget> {
                         height: 40,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text('${forecastNotifier.currentWeather.clouds}%'),
@@ -115,7 +115,7 @@ class _CurrentWeatherWidgetState extends State<CurrentWeatherWidget> {
                       height: 70,
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
+                        color: Theme.of(context).dividerColor,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Image.asset(
@@ -124,7 +124,7 @@ class _CurrentWeatherWidgetState extends State<CurrentWeatherWidget> {
                         height: 40,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text('${forecastNotifier.currentWeather.humidity}%'),

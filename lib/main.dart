@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_weather_app/controller/theme_controller.dart';
+import 'package:flutter_weather_app/controller/settings_controller.dart';
 
 import 'controller/forecast_controller.dart';
 import 'view/screens/home_screen.dart';
@@ -17,14 +17,14 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ThemeController>(create: (_) => ThemeController()),
+        ChangeNotifierProvider<SettingsController>(create: (_) => SettingsController()),
         ChangeNotifierProvider<ForecastController>(create: (_) => ForecastController()),
       ],
-      child: Consumer<ThemeController>(
-        builder: (context, ThemeController themeNotifier, child) {
+      child: Consumer<SettingsController>(
+        builder: (context, SettingsController settingsNotifier, child) {
           return MaterialApp(
             title: 'Flutter Weather App',
-            theme: themeNotifier.isDark ? ThemeData.dark() : ThemeData(primarySwatch: Colors.purple),
+            theme: settingsNotifier.isDark ? ThemeData.dark() : ThemeData(primarySwatch: Colors.purple),
             debugShowCheckedModeBanner: false,
             home: HomeScreen(),
           );
